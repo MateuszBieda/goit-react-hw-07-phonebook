@@ -18,10 +18,9 @@ export const ContactsList = () => {
     contact?.name?.toLowerCase().includes(filter.toLowerCase())
   );
 
-  const handleDelete = id => {
-    dispatch(deleteContact(id));
+  const handleDelete = contactId => {
+    dispatch(deleteContact(contactId));
   };
-
   if (!filteredContacts?.length) {
     return 'No contacts found';
   }
@@ -37,7 +36,7 @@ export const ContactsList = () => {
           <button
             className={css.button_delete}
             type="submit"
-            onClick={handleDelete}
+            onClick={() => handleDelete(id)}
           >
             Delete
           </button>
