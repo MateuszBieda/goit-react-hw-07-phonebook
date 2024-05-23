@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchContacts } from '../../redux/operations';
 import { getContacts, getFilter } from '../../redux/selectors';
-import { deleteContact } from '../../redux/contactsSlice';
+import { deleteContact } from '../../redux/operations';
 
 export const ContactsList = () => {
   const contacts = useSelector(getContacts);
@@ -37,7 +37,7 @@ export const ContactsList = () => {
           <button
             className={css.button_delete}
             type="submit"
-            onClick={() => handleDelete(id)}
+            onClick={handleDelete}
           >
             Delete
           </button>

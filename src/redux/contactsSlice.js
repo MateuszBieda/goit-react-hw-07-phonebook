@@ -1,39 +1,5 @@
-// import { createSlice } from '@reduxjs/toolkit';
-
-// const contactsInitialState = {
-//   items: [],
-//   isLoading: false,
-//   error: null,
-// };
-
-// const contactsSlice = createSlice({
-//   name: 'contacts',
-//   initialState: contactsInitialState,
-
-//   reducers: {
-//     fetchingInProgress(state) {
-//       state.isLoading = true;
-//     },
-//     fetchingSuccess(state, action) {
-//       state.isLoading = false;
-//       state.error = null;
-//       state.items = action.payload;
-//     },
-//     fetchingError(state, action) {
-//       state.isLoading = false;
-//       state.error = action.payload;
-//     },
-//   },
-// });
-
-// export const { fetchingInProgress, fetchingSuccess, fetchingError } =
-//   contactsSlice.actions;
-
-// export const contactsReducer = contactsSlice.reducer;
-// export const { addContact, deleteContact } = contactsSlice.actions;
-
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts } from './operations';
+import { fetchContacts, deleteContact } from './operations';
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -56,10 +22,24 @@ const contactsSlice = createSlice({
       .addCase(fetchContacts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(deleteContact.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        const index = state.items.findIndex(
+          contact => contact.id === action.payload.id
+        );
+        state.items.splice(index, 1);
+      })
+      .addCase(deleteContact.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });
 
-
 export const contactsReducer = contactsSlice.reducer;
-export const { addContact, deleteContact } = contactsSlice.actions;
+export const { addContact} = contactsSlice.actions;
