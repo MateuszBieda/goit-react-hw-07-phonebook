@@ -1,20 +1,20 @@
-import css from "./ContactForm.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
-import { getContacts } from "../../redux/selectors";
-import { nanoid } from "nanoid";
-import { toast } from "react-toastify";
+import css from './ContactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/operations';
+import { getContacts } from '../../redux/selectors';
+import { nanoid } from 'nanoid';
+import { toast } from 'react-toastify';
 
 export const Form = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     const contact = {
-      id: nanoid(),
+      // id: nanoid(),
       name: e.currentTarget.elements.name.value,
-      number: e.currentTarget.elements.number.value
+      number: e.currentTarget.elements.number.value,
     };
 
     const nameExist = contacts.find(
